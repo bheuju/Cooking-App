@@ -1,0 +1,94 @@
+﻿@model List<Cook.Models.Recipe>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cooking App</h2>
+
+@*<p><a href="recipe/recipe/1">Fudge</a></p>
+<p><a href="recipe/recipe/2">Homemade Mac and Cheese</a></p>
+<p><a href="recipe/recipe/3">Honey Glazed Chicken</a></p>*@
+
+@foreach (var recipe in Model)
+{
+    <p>@Html.ActionLink(recipe.name, "Recipe", "Recipe", new { id = recipe.id }, null)</p>
+}
+
+@*@Html.ActionLink("Fudge", "Recipe", "Recipe", new { id = 1 }, null)*@
+
+<p>This is a paragraph. I like you! (^_^) </p>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        @for (int i = 0; i < Model.Count; i = i + 4)
+        {
+            Cook.Models.Recipe recipe = Model[i];
+            <a href="recipe/recipe/@recipe.id" class="thumbnail">
+                <div class="center-block">
+                    <img src="/content/images/@recipe.img" class="img img-responsive" />
+                    <h4 class="text-center">@recipe.name</h4>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="col-md-3">
+        @for (int i = 1; i < Model.Count; i = i + 4)
+        {
+            Cook.Models.Recipe recipe = Model[i];
+            <a href="recipe/recipe/@recipe.id" class="thumbnail">
+                <div class="center-block">
+                    <img src="/content/images/@recipe.img" class="img img-responsive" />
+                    <h4 class="text-center">@recipe.name</h4>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="col-md-3">
+        @for (int i = 2; i < Model.Count; i = i + 4)
+        {
+            Cook.Models.Recipe recipe = Model[i];
+            <a href="recipe/recipe/@recipe.id" class="thumbnail">
+                <div class="center-block">
+                    <img src="/content/images/@recipe.img" class="img img-responsive" />
+                    <h4 class="text-center">@recipe.name</h4>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="col-md-3">
+        @for (int i = 3; i < Model.Count; i = i + 4)
+        {
+            Cook.Models.Recipe recipe = Model[i];
+            <a href="recipe/recipe/@recipe.id" class="thumbnail">
+                <div class="center-block">
+                    <img src="/content/images/@recipe.img" class="img img-responsive" />
+                    <h4 class="text-center">@recipe.name</h4>
+                </div>
+            </a>
+        }
+    </div>
+
+</div>
+
+@*<div class="row">
+    @foreach (Cook.Models.Recipe recipe in Model)
+    {
+        <div class="col-md-3">
+            <a href="#" class="thumbnail">
+                <div class="center-block">
+                    <img src="/content/images/@recipe.img" class="img img-responsive" />
+                    <h4 class="text-center">@recipe.name</h4>
+                </div>
+            </a>
+        </div>
+    }
+</div>*@
+
+@*<hr />*@
+

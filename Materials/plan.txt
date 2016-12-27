@@ -1,0 +1,67 @@
+Recipes
+	ingredients
+	procedures
+		steps
+		photos
+	
+Users	
+	basic info
+	user specific data
+
+Find recipes
+Favourite recipes
+
+
+
+Display recipes
+	View recipes overview
+		ingredients
+		procedures (steps, photos)
+		
+Categorize recipes
+	Main course, Dessert, Beverages
+
+Allow users to view and interact with recipes
+	Users accounts (login, logout, my recipes.)
+	View recipes
+	Favourite recipes (save)
+	Feedback to email of origin
+
+
+Pages
+-----
+	Recipe page
+		All recipe page (home page) - display list of recipes
+		Single recipe page (ingredients, description, images)
+	User related page
+		Login/Signup page (OAuth)
+		My Recipes (user specific data)
+			list recipes written by the user (allow edit)
+			list favourited recipes
+		
+	Recipe adding page
+
+
+Objects	
+-------	
+Users
+	name
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

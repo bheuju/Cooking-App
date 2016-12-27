@@ -1,0 +1,32 @@
+﻿@model Cook.Models.Recipe
+
+@{
+    ViewBag.Title = "Recipe";
+    
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@Model.id @Model.name</h2>
+
+        <button class="btn btn-info pull-right">Favourite  <span class="glyphicon glyphicon-star"></span></button>
+
+        <img src="/Content/Images/@Model.img" class="img-responsive center-block img-rounded"/>
+
+        <hr />
+
+        <blockquote>@Model.description</blockquote>
+        <hr />
+
+        <h4>Ingredients</h4>
+        <ul>
+            @foreach (string x in @Model.ingredients)
+            {
+                <li>@x</li>
+            }
+        </ul>
+        <hr />
+        <h4>Procedure</h4>
+        <p>@Model.process</p>
+    </div>
+</div>
