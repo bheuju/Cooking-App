@@ -24,6 +24,12 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Create Recipe", "Create", "CreateRecipe")</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Signup", "Signup", "Account")</li>
+                </ul>
+                @Html.ActionLink("Logout", "Logout", "Account", null, null)
+
             </div>
         </div>
     </div>

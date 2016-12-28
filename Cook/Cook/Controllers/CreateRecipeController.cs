@@ -8,13 +8,13 @@ using System.Web.Mvc;
 
 namespace Cook.Controllers
 {
+    [Authorize(Roles = "user")]
     public class CreateRecipeController : Controller
     {
         //
         // GET: /home/create
         public ActionResult Create()
         {
-            //ViewBag.id = HomeController.recipeList.Count;
             return View();
         }
 
