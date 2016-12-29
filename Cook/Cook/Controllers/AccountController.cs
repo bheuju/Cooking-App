@@ -1,4 +1,5 @@
-﻿using Cook.Models;
+﻿using Cook.DAL;
+using Cook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,15 @@ namespace Cook.Controllers
             User user = new User() { email = userModel.email, password = userModel.password };
 
             //get user details
+            //check user credentials
+            user = UserAccess.getInstance().getUserDetails(user);
 
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(userModel.email, false);
 
-                var authTicket = new FormsAuthenticationTicket(1, user.email, DateTime.Now, DateTime.Now.AddMinutes(20), false, "user");
-                //var authTicket = new FormsAuthenticationTicket(1, user.email, DateTime.Now, DateTime.Now.AddMinutes(20), false, user.roles);
+                //var authTicket = new FormsAuthenticationTicket(1, user.email, DateTime.Now, DateTime.Now.AddMinutes(20), false, "user");
+                var authTicket = new FormsAuthenticationTicket(1, user.email, DateTime.Now, DateTime.Now.AddMinutes(20), false, user.roles);
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 HttpContext.Response.Cookies.Add(authCookie);
@@ -55,9 +58,17 @@ namespace Cook.Controllers
         }
 
         //POST: /Account/Signup
-        [HttpPost]
         public ActionResult Signup()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Signup(User user)
+        {
+            SqlConnect saveSql = new SqlConnect();
+            saveSql.cmdExecute("insert into users values ('" + user.email + "','" + user.password + "','" + user.roles + "')");
+
             return View();
         }
 

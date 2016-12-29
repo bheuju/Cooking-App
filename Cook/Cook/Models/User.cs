@@ -9,11 +9,12 @@ namespace Cook.Models
     public class User
     {
         public int id { get; set; }
+
         public string email { get; set; }
 
         [DataType(DataType.Password)]
         public string password { get; set; }
 
-        public string roles { get; set; }       //EG: ("admin,user, guest")
+        public string roles { get; set; }       //EG: ("admin,user,guest")
     }
 }

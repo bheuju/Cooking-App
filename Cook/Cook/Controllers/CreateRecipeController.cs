@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Cook.Controllers
 {
-    [Authorize(Roles = "user")]
+    [Authorize(Roles = "user,admin" )]
     public class CreateRecipeController : Controller
     {
         //
