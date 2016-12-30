@@ -9,7 +9,19 @@
     <div class="col-md-12">
         <h2>@Model.id @Model.name</h2>
 
-        <button class="btn btn-info pull-right">Favourite  <span class="glyphicon glyphicon-star"></span></button>
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm())
+            {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <button class="btn btn-info pull-right" id ="favourite">Favourite  <span class="glyphicon glyphicon-star"></span></button>
+                </div>
+            </div>
+            }
+        }
+
+        @*@Html.ActionLink("Favourite", "Index", null, new { @class = "btn btn-default btn-primary" });*@
 
         <img src="/Content/Images/@Model.img" class="img-responsive center-block img-rounded"/>
 
@@ -32,3 +44,13 @@
         <p>@Model.process</p>
     </div>
 </div>
+
+
+<script>
+    $(function () {
+        $("#favourite").on("click", function () {
+            $("#favourite").Html = "Favourited";
+            $("#favourite").attr("disabled", true);
+        });
+    });
+</script>

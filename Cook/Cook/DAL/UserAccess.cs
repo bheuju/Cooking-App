@@ -9,7 +9,10 @@ namespace Cook.DAL
 {
     public class UserAccess
     {
-        static UserAccess pInstance;
+        public User pUser = null;
+
+        static UserAccess pInstance = null;
+        UserAccess() { }
 
         public static UserAccess getInstance()
         {
@@ -20,25 +23,26 @@ namespace Cook.DAL
             return pInstance;
         }
 
+
         public User getUserDetails(User user)
         {
             SqlConnect sql = new SqlConnect();
 
-            sql.retriveData("select * from Users where email='" + user.email + "' and password='" + user.password + "'");
+            sql.retriveData("select * from Users where username='" + user.username + "' and password='" + user.password + "'");
             int count = sql.sqlTable.Rows.Count;
 
             if (count > 0)
             {
                 //user exists
-                return new User()
+                pUser = new User()
                 {
                     id = Convert.ToInt32(sql.sqlTable.Rows[0]["id"]),
-                    email = sql.sqlTable.Rows[0]["email"].ToString(),
+                    username = sql.sqlTable.Rows[0]["username"].ToString(),
                     password = sql.sqlTable.Rows[0]["password"].ToString(),
                     roles = sql.sqlTable.Rows[0]["roles"].ToString()
                 };
+                return pUser;
             }
-
 
             //user not found ... return null
             return null;
