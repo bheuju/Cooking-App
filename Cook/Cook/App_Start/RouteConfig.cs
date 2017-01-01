@@ -15,7 +15,7 @@ namespace Cook
 
             //routes.MapRoute(
             //    name: "Recipe",
-            //    url: "{controller}/{action}/{id}"
+            //    url: "Recipe/{action}/{id}"
             //    //defaults: new { controller = "Recipe", action = "Recipe", id = UrlParameter.Optional }
             //);
 

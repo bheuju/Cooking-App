@@ -15,13 +15,24 @@
             {
             <div class="form-horizontal">
                 <div class="form-group">
-                    <button class="btn btn-info pull-right" id ="favourite">Favourite  <span class="glyphicon glyphicon-star"></span></button>
+                    @if (Model.isFavourited)
+                    {
+                        <button class="btn btn-danger pull-right">Unfavourite  <span class="glyphicon glyphicon-star"></span></button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-info pull-right">Favourite  <span class="glyphicon glyphicon-star"></span></button>
+                    }
                 </div>
             </div>
             }
-        }
 
-        @*@Html.ActionLink("Favourite", "Index", null, new { @class = "btn btn-default btn-primary" });*@
+            if (Model.isEditable)
+            {    
+            @Html.ActionLink("Edit", "Edit", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-default btn-primary pull-right" })
+            }
+
+        }
 
         <img src="/Content/Images/@Model.img" class="img-responsive center-block img-rounded"/>
 
@@ -46,11 +57,11 @@
 </div>
 
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
 <script>
-    $(function () {
-        $("#favourite").on("click", function () {
-            $("#favourite").Html = "Favourited";
-            $("#favourite").attr("disabled", true);
-        });
-    });
+    
 </script>

@@ -1,5 +1,4 @@
-﻿@*@model Cook.Models.User*@
-
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,20 +23,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Create Recipe", "Create", "CreateRecipe")</li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Account")</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                        <li>@Html.ActionLink("Signup", "Signup", "Account")</li>
-                    }
-                </ul>
+                @Html.Partial("_Login")
             </div>
         </div>
     </div>

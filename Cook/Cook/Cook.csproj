@@ -145,9 +145,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CreateRecipeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
+    <Compile Include="DAL\RecipeAccess.cs" />
     <Compile Include="DAL\SqlConnect.cs" />
     <Compile Include="DAL\UserAccess.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,7 +156,9 @@
     <Compile Include="Models\Drinks.cs" />
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\RecipeFactory.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserDashboardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,11 +169,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Recipe\Recipe.cshtml" />
-    <Content Include="Views\CreateRecipe\Create.cshtml" />
+    <Content Include="Views\Recipe\Create.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Dashboard.cshtml" />
+    <Content Include="Views\Recipe\Edit.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Shared\_ListRecipes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

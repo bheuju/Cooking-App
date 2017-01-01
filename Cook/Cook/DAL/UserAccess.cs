@@ -9,10 +9,26 @@ namespace Cook.DAL
 {
     public class UserAccess
     {
-        public User pUser = null;
+        private User pUser = null;
+        private User guestUser = new User
+        {
+            id = 0,
+            username = "guest",
+            password = "guest",
+            roles = "guest"
+        };
 
         static UserAccess pInstance = null;
         UserAccess() { }
+
+        public User getUser()
+        {
+            if (pUser == null)
+            {
+                return guestUser;
+            }
+            return pUser;
+        }
 
         public static UserAccess getInstance()
         {
@@ -22,7 +38,6 @@ namespace Cook.DAL
             }
             return pInstance;
         }
-
 
         public User getUserDetails(User user)
         {

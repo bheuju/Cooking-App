@@ -30,5 +30,11 @@ namespace Cook.Models
         [Display(Name = "Ingredients List")]
         public List<string> ingredients { get; set; }
 
+        //User related properties
+        public int creatorId { get; set; }
+
+        //User related Recipe properties for User
+        public bool isFavourited = false;
+        public bool isEditable = false;
     }
 }

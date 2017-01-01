@@ -23,7 +23,7 @@ namespace Cook.Controllers
          * Retrive data from database
          * stores in "sqlTable"
          */
-        public void retriveData(string cmd)
+        public void retriveData(string cmd, string errorMessage = "Error Executing")
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Cook.Controllers
             catch (Exception e)
             {
                 //Console.WriteLine(e);
-                HttpContext.Current.Response.Write("<script>alert('Error connecting')</script>");
+                HttpContext.Current.Response.Write("<script>alert('" + errorMessage + "')</script>");
             }
             finally
             {
@@ -45,7 +45,7 @@ namespace Cook.Controllers
         /**
          * For insert, update, delete execution
          */
-        public void cmdExecute(string cmd)
+        public void cmdExecute(string cmd, string errorMessage = "Error Executing")
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Cook.Controllers
                 int rowInfected = sqlCmd.ExecuteNonQuery();
 
                 if (rowInfected > 0)
-                { 
+                {
                     //Command execution successful
                     //HttpContext.Current.Response.Write("<script>alert('Added')</script>");
                 }
@@ -63,7 +63,7 @@ namespace Cook.Controllers
             catch (Exception e)
             {
                 //Console.WriteLine(e);
-                HttpContext.Current.Response.Write("<script>alert('Error executing')</script>");
+                HttpContext.Current.Response.Write("<script>alert('" + errorMessage + "')</script>");
             }
             finally
             {

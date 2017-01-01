@@ -1,4 +1,4 @@
-﻿@model List<Cook.Models.Recipe>
+﻿@model Cook.Models.UserDashboardModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -8,66 +8,25 @@
 <h2>Dashboard</h2>
 <hr />
 
+@*@{
+    List<Cook.Models.Recipe> myRecipeList = new List<Cook.Models.Recipe>();
+    List<Cook.Models.Recipe> favouriteRecipeList = new List<Cook.Models.Recipe>();
+
+    foreach (Cook.Models.Recipe recipe in Model)
+    {
+        if (recipe.isFavourited)
+        {
+            favouriteRecipeList.Add(recipe);
+        }
+        if (recipe.isEditable)
+        {
+            myRecipeList.Add(recipe);
+        }
+    }
+}*@
+
 <h3>Favourited Recipes</h3>
+@Html.Partial("_ListRecipes", Model.favouritedRecipeList)
 
-@foreach (var recipe in Model)
-{
-    <p>@Html.ActionLink(recipe.name, "Recipe", "Recipe", new { id = recipe.id }, null)</p>
-}
-
-
-<div class="row">
-    <div class="col-md-3">
-        @for (int i = 0; i < Model.Count; i = i + 4)
-        {
-            Cook.Models.Recipe recipe = Model[i];
-            <a href="recipe/recipe/@recipe.id" class="thumbnail">
-                <div class="center-block">
-                    <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
-                    <h4 class="text-center">@recipe.name</h4>
-                </div>
-            </a>
-        }
-    </div>
-
-    <div class="col-md-3">
-        @for (int i = 1; i < Model.Count; i = i + 4)
-        {
-            Cook.Models.Recipe recipe = Model[i];
-            <a href="recipe/recipe/@recipe.id" class="thumbnail">
-                <div class="center-block">
-                    <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
-                    <h4 class="text-center">@recipe.name</h4>
-                </div>
-            </a>
-        }
-    </div>
-
-    <div class="col-md-3">
-        @for (int i = 2; i < Model.Count; i = i + 4)
-        {
-            Cook.Models.Recipe recipe = Model[i];
-            <a href="recipe/recipe/@recipe.id" class="thumbnail">
-                <div class="center-block">
-                    <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
-                    <h4 class="text-center">@recipe.name</h4>
-                </div>
-            </a>
-        }
-    </div>
-
-    <div class="col-md-3">
-        @for (int i = 3; i < Model.Count; i = i + 4)
-        {
-            Cook.Models.Recipe recipe = Model[i];
-            <a href="recipe/recipe/@recipe.id" class="thumbnail">
-                <div class="center-block">
-                    <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
-                    <h4 class="text-center">@recipe.name</h4>
-                </div>
-            </a>
-        }
-    </div>
-
-</div>
-
+<h3>My Recipes</h3>
+@Html.Partial("_ListRecipes", Model.myRecipeList)
