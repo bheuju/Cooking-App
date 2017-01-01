@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Create", "CreateRecipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -27,8 +27,8 @@
             @Html.LabelFor(model => model.img, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="file" id="imageSelector" />
-                <img id="imagePreview" src="#" />
             </div>
+            <img id="imagePreview" />
         </div>
 
         <div class="form-group">
