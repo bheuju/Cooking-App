@@ -41,15 +41,15 @@ input[type="checkbox"].input-validation-error {
 }
 
 
+
 /* Thumbnail images */
 .thumb {
-    //width: 100%;
 }
 
-.thumb:hover {
-}
+    .thumb:hover {
+    }
 
 
 .no-text-decoration {
-    text-decoration:none;
+    text-decoration: none;
 }

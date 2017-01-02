@@ -7,6 +7,17 @@
 
 <h2>Cooking App</h2>
 
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
+{   
+    <div class="form-group">
+
+        @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search" })
+
+    </div>
+    <button class="btn btn-default">Search</button>
+}
+
+
 <p>This is a paragraph. I like you! (^_^) </p>
 <hr />
 
