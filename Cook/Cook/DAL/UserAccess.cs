@@ -62,5 +62,19 @@ namespace Cook.DAL
             //user not found ... return null
             return null;
         }
+
+        public bool checkUserExists(User user)
+        {
+            SqlConnect sql = new SqlConnect();
+
+            sql.retriveData("select * from Users where username='" + user.username + "'");
+
+            if (sql.sqlTable.Rows.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

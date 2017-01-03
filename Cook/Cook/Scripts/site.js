@@ -2,7 +2,7 @@
 
 $(function () {
     $("#add-new-ingedrient").on("click", function () {
-        $("#ingedrients-list").append("<li>" + "<input type='text' name='ingedrients' />" + "</li>");
+        $("#ingedrients-list").append("<li>" + "<input type='text' name='ingedrients' class='form-control'/>" + "</li>");
     });
 
     $(function () {

@@ -23,7 +23,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.name)
+                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.name)
             </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.description)
+                @Html.TextAreaFor(model => model.description, new { @class = "form-control", rows = "3" })
                 @Html.ValidationMessageFor(model => model.description)
             </div>
         </div>
@@ -52,7 +52,7 @@
                     @foreach (string ingedrient in Model.ingredients)
                     { 
                         <li>
-                            <input type="text" name="ingedrients" value="@ingedrient"/>
+                            <input type="text" name="ingedrients" value="@ingedrient" class = "form-control" />
                         </li>
                     }
 
@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.process, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.process)
+                @Html.TextAreaFor(model => model.process, new { @class = "form-control", rows = "5" })
                 @Html.ValidationMessageFor(model => model.process)
             </div>
         </div>

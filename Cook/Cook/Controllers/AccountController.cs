@@ -67,9 +67,21 @@ namespace Cook.Controllers
         public ActionResult Signup(User user)
         {
             SqlConnect saveSql = new SqlConnect();
-            saveSql.cmdExecute("insert into users values ('" + user.username + "','" + user.password + "','" + "user" + "')");
 
-            return RedirectToAction("Index", "Home");
+            //Check user already exists
+            if (!UserAccess.getInstance().checkUserExists(user))
+            {
+                saveSql.cmdExecute("insert into users values ('" + user.username + "','" + user.password + "','" + "user" + "')");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Username already exists");
+            }
+
+
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
 
         //POST: /Account/Logout
