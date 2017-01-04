@@ -79,7 +79,6 @@ namespace Cook.Controllers
                 ModelState.AddModelError("", "Username already exists");
             }
 
-
             //return RedirectToAction("Index", "Home");
             return View();
         }
@@ -94,82 +93,9 @@ namespace Cook.Controllers
         }
 
 
-
+        [Authorize]
         public ActionResult Dashboard()
         {
-            //List and Display favourited recipes
-
-            //List<Recipe> recipeList = new List<Recipe>();
-
-            //favouritedRecipeLoader.retriveData("select * from Favourites where user_id = '" + UserAccess.getInstance().getUser().id + "'");
-
-
-            /*
-
-            //SqlConnect ingedrientsLoader = new SqlConnect();
-
-            //SqlConnect favouritedRecipeLoader = new SqlConnect();
-            //favouritedRecipeLoader.retriveData("select * from Favourites where user_id = '" + UserAccess.getInstance().getUser().id + "'");
-
-            //int favRecipeCount = favouritedRecipeLoader.sqlTable.Rows.Count;
-
-            //if (favRecipeCount > 0)
-            //{
-            //    for (int i = 0; i < favRecipeCount; i++)
-            //    {
-
-            //        SqlConnect recipeLoader = new SqlConnect();
-            //        recipeLoader.retriveData("select * from Recipe where id = '" + favouritedRecipeLoader.sqlTable.Rows[i]["recipe_id"] + "'");
-
-            //        int recipeCount = recipeLoader.sqlTable.Rows.Count;
-
-            //        if (recipeCount < 0)
-            //        {
-            //            break;
-            //        }
-
-            //        //prepare recipe data
-            //        int id = Convert.ToInt32(recipeLoader.sqlTable.Rows[0]["id"].ToString());
-            //        string name = recipeLoader.sqlTable.Rows[0]["name"].ToString();
-            //        string img = recipeLoader.sqlTable.Rows[0]["img"].ToString();
-            //        string description = recipeLoader.sqlTable.Rows[0]["description"].ToString();
-            //        string process = recipeLoader.sqlTable.Rows[0]["process"].ToString();
-
-            //        ingedrientsLoader.retriveData("select ingedrients from Ingedrients where recipe_id = " + id);
-            //        List<string> ingedrientsList = new List<string>();
-            //        ingedrientsList.Clear();
-
-            //        int ingedrientsCount = ingedrientsLoader.sqlTable.Rows.Count;
-
-            //        if (ingedrientsCount > 0)
-            //        {
-            //            //prepare ingedrients data
-            //            for (int j = 0; j < ingedrientsCount; j++)
-            //            {
-            //                string ingedrient = ingedrientsLoader.sqlTable.Rows[j]["ingedrients"].ToString();
-            //                ingedrientsList.Add(ingedrient);
-            //            }
-            //            ingedrientsLoader.sqlTable.Clear();
-            //        }
-
-            //        var recipe = new Recipe()
-            //        {
-            //            id = id,
-            //            name = name,
-            //            img = img,
-            //            description = description,
-            //            process = process,
-            //            ingredients = ingedrientsList
-            //        };
-
-            //        recipeList.Add(recipe);
-
-            //    }
-            //}
-
-            //return View(recipeList);
-             */
-
             List<Recipe> favouritedRecipeList = new List<Recipe>();
             List<Recipe> myRecipeList = new List<Recipe>();
 

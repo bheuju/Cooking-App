@@ -10,6 +10,7 @@ namespace Cook.DAL
 {
     public class RecipeAccess
     {
+        /** Singleton pattern **/
         private RecipeAccess() { }
 
         private static RecipeAccess pInstance = null;
@@ -23,12 +24,17 @@ namespace Cook.DAL
             return pInstance;
         }
 
+
+        /***
+         * 
+         **/
         public Recipe getRecipe(int recipeId)
         {
             SqlConnect recipeLoader = new SqlConnect();
             recipeLoader.retriveData("select * from Recipe where id='" + recipeId + "'");
 
             Recipe recipe = getRecipeList(recipeLoader.sqlTable)[0];
+            //Recipe recipe = new Drinks();
 
             return recipe;
         }
@@ -55,6 +61,7 @@ namespace Cook.DAL
                     string img = recipeTable.Rows[i]["img"].ToString();
                     string description = recipeTable.Rows[i]["description"].ToString();
                     string process = recipeTable.Rows[i]["process"].ToString();
+                    string type = recipeTable.Rows[i]["type"].ToString();
 
                     ingedrientsLoader.retriveData("select ingedrients from Ingedrients where recipe_id = " + id);
                     List<string> ingedrientsList = new List<string>();
@@ -73,16 +80,28 @@ namespace Cook.DAL
                         ingedrientsLoader.sqlTable.Clear();
                     }
 
-                    var recipe = new Recipe()
+
+                    //Get Recipe object from RecipeFactory
+                    RecipeFactory factory = new RecipeFactory();
+                    Recipe recipe = new Recipe();
+
+                    if (type.ToLower() == "drinks")
                     {
-                        id = id,
-                        creatorId = creatorId,
-                        name = name,
-                        img = img,
-                        description = description,
-                        process = process,
-                        ingredients = ingedrientsList
-                    };
+                        recipe = factory.Get(RecipeFactory.RecipeType.DRINKS);
+                    }
+                    else if (type.ToLower() == "food")
+                    {
+                        recipe = factory.Get(RecipeFactory.RecipeType.FOOD);
+                    }
+
+                    recipe.id = id;
+                    recipe.creatorId = creatorId;
+                    recipe.name = name;
+                    recipe.img = img;
+                    recipe.description = description;
+                    recipe.process = process;
+                    recipe.ingredients = ingedrientsList;
+
 
                     //check and assign for favourites and editable recipes (if user is logged in)
                     if (HttpContext.Current.Request.IsAuthenticated)
@@ -101,6 +120,7 @@ namespace Cook.DAL
                         }
 
                         //check editable
+
                         if (userId == recipe.creatorId)
                         {
                             recipe.isEditable = true;

@@ -7,5 +7,9 @@ namespace Cook.Models
 {
     public class Drinks : Recipe
     {
+        public Drinks()
+        {
+            type = "Drinks";
+        }
     }
 }

@@ -177,6 +177,7 @@
     <Content Include="Views\Recipe\Edit.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Shared\_ListRecipes.cshtml" />
+    <Content Include="Views\Recipe\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

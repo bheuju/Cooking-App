@@ -36,5 +36,8 @@ namespace Cook.Models
         //User related Recipe properties for User
         public bool isFavourited = false;
         public bool isEditable = false;
+
+        public string type { get; set; }
+
     }
 }

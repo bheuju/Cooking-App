@@ -15,6 +15,12 @@ namespace Cook.Controllers
 
         static int recipeId = 0;
 
+
+
+        /************/
+        /*** READ ***/
+        /************/
+
         // GET: /Recipe/recipe/{id}
         public ActionResult Recipe(int id)
         {
@@ -58,6 +64,12 @@ namespace Cook.Controllers
 
             return View(recipe);
         }
+
+
+
+        /**************/
+        /*** CREATE ***/
+        /**************/
 
         [Authorize(Roles = "user,admin")]
         // GET: /recipe/create
@@ -113,7 +125,7 @@ namespace Cook.Controllers
 
             //Write to database
             //Write recipe to [Recipe]
-            sql.cmdExecute("insert into recipe values ('" + recipe.id + "','" + recipe.creatorId + "','" + recipe.name + "','" + recipe.img + "','" + recipe.description + "','" + recipe.process + "')");
+            sql.cmdExecute("insert into recipe values ('" + recipe.id + "','" + recipe.creatorId + "','" + recipe.name + "','" + recipe.type + "','" + recipe.img + "','" + recipe.description + "','" + recipe.process + "')");
 
             //Write ingedrients to [Ingedrients]
             foreach (string ingedrient in ingedrientsList)
@@ -127,6 +139,13 @@ namespace Cook.Controllers
             return View();
         }
 
+
+
+        /**************/
+        /*** UPDATE ***/
+        /**************/
+
+        [Authorize(Roles = "user,admin")]
         //GET: /Recipe/Edit/{id}
         public ActionResult Edit(int recipeId)
         {
@@ -135,54 +154,10 @@ namespace Cook.Controllers
 
             Recipe recipe = RecipeAccess.getInstance().getRecipe(recipeId);
 
-            //SqlConnect recipeLoader = new SqlConnect();
-            //SqlConnect ingedrientsLoader = new SqlConnect();
-
-            //recipeLoader.retriveData("select * from Recipe where id='" + recipeId + "'");
-
-            //int recipeCount = recipeLoader.sqlTable.Rows.Count;
-
-            //if (recipeCount > 0)
-            //{
-            //    //prepare recipe data
-            //    int id = Convert.ToInt32(recipeLoader.sqlTable.Rows[0]["id"].ToString());
-            //    string name = recipeLoader.sqlTable.Rows[0]["name"].ToString();
-            //    string img = recipeLoader.sqlTable.Rows[0]["img"].ToString();
-            //    string description = recipeLoader.sqlTable.Rows[0]["description"].ToString();
-            //    string process = recipeLoader.sqlTable.Rows[0]["process"].ToString();
-
-            //    ingedrientsLoader.retriveData("select ingedrients from Ingedrients where recipe_id = " + id);
-            //    List<string> ingedrientsList = new List<string>();
-            //    ingedrientsList.Clear();
-
-            //    int ingedrientsCount = ingedrientsLoader.sqlTable.Rows.Count;
-
-            //    if (ingedrientsCount > 0)
-            //    {
-            //        //prepare ingedrients data
-            //        for (int j = 0; j < ingedrientsCount; j++)
-            //        {
-            //            string ingedrient = ingedrientsLoader.sqlTable.Rows[j]["ingedrients"].ToString();
-            //            ingedrientsList.Add(ingedrient);
-            //        }
-            //        ingedrientsLoader.sqlTable.Clear();
-            //    }
-
-            //    recipe = new Recipe()
-            //    {
-            //        id = id,
-            //        name = name,
-            //        img = img,
-            //        description = description,
-            //        process = process,
-            //        ingredients = ingedrientsList
-            //    };
-
-            //}
-
             return View(recipe);
         }
 
+        [Authorize(Roles = "user,admin")]
         //POST: recipe/edit
         [HttpPost]
         public ActionResult Edit(Recipe recipe)
@@ -197,6 +172,12 @@ namespace Cook.Controllers
             if (Request.Files.Count > 0)
             {
                 var file = Request.Files[0];
+
+                //if (file.ContentType != "image/jpeg")
+                //{
+                //    ModelState.AddModelError("", "Not an image file");
+                //    return View();
+                //}
 
                 if (file != null && file.ContentLength > 0)
                 {
@@ -252,6 +233,38 @@ namespace Cook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
+
+        /**************/
+        /*** DELETE ***/
+        /**************/
+
+        [Authorize(Roles = "user,admin")]
+        //GET: /recipe/delete
+        public ActionResult Delete()
+        {
+            //Are you sure?
+            return View();
+        }
+
+        [Authorize(Roles = "user,admin")]
+        //POST: /recipe/delete/{id}
+        [HttpPost]
+        public ActionResult Delete(int recipeId)
+        {
+            SqlConnect deleteSql = new SqlConnect();
+            //delete ingedrients, favourites and recipe
+            deleteSql.cmdExecute("delete from Ingedrients where recipe_id='" + recipeId + "'");
+            deleteSql.cmdExecute("delete from Favourites where recipe_id='" + recipeId + "'");
+            deleteSql.cmdExecute("delete from Recipe where id='" + recipeId + "'");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+        /** EXTRA **/
 
         public Recipe getRecipeFromHome(int id)
         {

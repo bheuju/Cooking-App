@@ -30,6 +30,7 @@
             if (Model.isEditable)
             {    
             @Html.ActionLink("Edit", "Edit", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-default btn-primary pull-right" })
+            @Html.ActionLink("Delete", "Delete", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-danger pull-right" })
             }
 
         }
