@@ -116,27 +116,49 @@ namespace Cook.Controllers
 
             Response.Write("Valid Ingedrients count: " + ingedrientsList.Count);
 
-
-
             recipe.id = HomeController.recipeList.Count + 1;    // [ID]
             recipe.creatorId = UserAccess.getInstance().getUser().id;   // [CREATOR ID]
 
-            SqlConnect sql = new SqlConnect();
-
+            /*************************************/
+            /*************************************/
             //Write to database
             //Write recipe to [Recipe]
-            sql.cmdExecute("insert into recipe values ('" + recipe.id + "','" + recipe.creatorId + "','" + recipe.name + "','" + recipe.type + "','" + recipe.img + "','" + recipe.description + "','" + recipe.process + "')");
+
+            //SqlConnect sql = new SqlConnect();
+            //sql.cmdExecute("insert into recipe values ('" + recipe.id + "','" + recipe.creatorId + "','" + recipe.name + "','" + recipe.type + "','" + recipe.img + "','" + recipe.description + "','" + recipe.process + "')");
 
             //Write ingedrients to [Ingedrients]
+            //foreach (string ingedrient in ingedrientsList)
+            //{
+            //    sql.cmdExecute("insert into Ingedrients values('" + recipe.id + "','" + ingedrient + "')");
+            //}
+            /*************************************/
+
+            SqlConnect createSql = new SqlConnect();
+
+            List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("@id", recipe.id),
+                new KeyValuePair<string, object>("@creatorId", recipe.creatorId),
+                new KeyValuePair<string, object>("@name", recipe.name),
+                new KeyValuePair<string, object>("@type", recipe.type),
+                new KeyValuePair<string, object>("@img", recipe.img),
+                new KeyValuePair<string, object>("@description", recipe.description),
+                new KeyValuePair<string, object>("@process", recipe.process)
+            };
+            createSql.executeStoredProcedure("CreateRecipe", param);
+
             foreach (string ingedrient in ingedrientsList)
             {
-                sql.cmdExecute("insert into Ingedrients values('" + recipe.id + "','" + ingedrient + "')");
+                param.Clear();
+                param.Add(new KeyValuePair<string, object>("@recipe_id", recipe.id));
+                param.Add(new KeyValuePair<string, object>("@ingedrient", ingedrient));
+
+                createSql.executeStoredProcedure("CreateRecipeIngedrients", param);
             }
 
-            Response.Write("After post request: ");
-            Response.Write(recipe.id);
-
-            return View();
+            //return View();
+            return RedirectToAction("Index", "Home");
         }
 
 

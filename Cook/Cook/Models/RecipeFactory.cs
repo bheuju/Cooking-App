@@ -7,18 +7,13 @@ namespace Cook.Models
 {
     public class RecipeFactory
     {
-        public enum RecipeType
-        {
-            FOOD = 0,
-            DRINKS = 1
-        }
-        public Recipe Get(RecipeType recipeType)
+        public Recipe Get(string recipeType)
         {
             switch (recipeType)
             {
-                case RecipeType.FOOD:
+                case "food":
                     return new Food();
-                case RecipeType.DRINKS:
+                case "drinks":
                     return new Drinks();
                 default:
                     return null;

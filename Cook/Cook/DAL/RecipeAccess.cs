@@ -3,6 +3,7 @@ using Cook.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -28,6 +29,16 @@ namespace Cook.DAL
         /***
          * 
          **/
+
+        //public Recipe getRecipe(int recipeId)
+        //{
+        //    SqlConnect sql = new SqlConnect();
+        //    sql.executeStoredPrcedure("GetRecipe");
+        //    //System.Diagnostics.Debug.Print("Stored procedure get recipe count: " + sql.sqlTable.Rows.Count);
+
+        //    return new Recipe();
+        //}
+
         public Recipe getRecipe(int recipeId)
         {
             SqlConnect recipeLoader = new SqlConnect();
@@ -85,14 +96,7 @@ namespace Cook.DAL
                     RecipeFactory factory = new RecipeFactory();
                     Recipe recipe = new Recipe();
 
-                    if (type.ToLower() == "drinks")
-                    {
-                        recipe = factory.Get(RecipeFactory.RecipeType.DRINKS);
-                    }
-                    else if (type.ToLower() == "food")
-                    {
-                        recipe = factory.Get(RecipeFactory.RecipeType.FOOD);
-                    }
+                    recipe = factory.Get(type.ToLower());
 
                     recipe.id = id;
                     recipe.creatorId = creatorId;

@@ -10,7 +10,7 @@ namespace Cook.Controllers
 {
     public class SqlConnect
     {
-        SqlConnection sqlCon = new SqlConnection();
+        public SqlConnection sqlCon = new SqlConnection();
         public DataTable sqlTable = new DataTable();
 
         public SqlConnect()
@@ -41,6 +41,39 @@ namespace Cook.Controllers
                 sqlCon.Close();
             }
         }
+
+
+        public void executeStoredProcedure(string procedure, List<KeyValuePair<string, object>> param)
+        {
+            //procedure name
+            //string sqlCmd = "GetRecipe";
+            SqlCommand cmd = new SqlCommand(procedure, sqlCon);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            foreach (KeyValuePair<string, object> p in param)
+            {
+                //System.Diagnostics.Debug.Print("" + p.Key + p.Value);
+                cmd.Parameters.AddWithValue(p.Key, p.Value);
+            }
+
+
+            try
+            {
+                sqlCon.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                HttpContext.Current.Response.Write("<script>alert('" + "Error Executing" + "')</script>");
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+        }
+
+
 
         /**
          * For insert, update, delete execution
