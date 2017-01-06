@@ -53,13 +53,27 @@ namespace Cook.Controllers
             {
                 //do unfavourite (remove)
                 SqlConnect unfavouriteSQL = new SqlConnect();
-                unfavouriteSQL.cmdExecute("delete from favourites where user_id='" + user_id + "'and recipe_id='" + recipeId + "'", "Error removing from favourites");
+                //unfavouriteSQL.cmdExecute("delete from favourites where user_id='" + user_id + "'and recipe_id='" + recipeId + "'", "Error removing from favourites");
+                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                {
+                    new KeyValuePair<string, object>("@user_id", user_id),
+                    new KeyValuePair<string, object>("@recipe_id", recipeId)
+                };
+
+                unfavouriteSQL.executeStoredProcedure("DeleteFavourites", param);
             }
             else
             {
                 //do favourite (add)
                 SqlConnect favouriteSQL = new SqlConnect();
-                favouriteSQL.cmdExecute("insert into favourites values('" + user_id + "','" + recipeId + "')", "Error saving to favourites");
+                //favouriteSQL.cmdExecute("insert into favourites values('" + user_id + "','" + recipeId + "')", "Error saving to favourites");
+                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                {
+                    new KeyValuePair<string, object>("@user_id", user_id),
+                    new KeyValuePair<string, object>("@recipe_id", recipeId)
+                };
+
+                favouriteSQL.executeStoredProcedure("SetFavourites", param);
             }
 
             return View(recipe);
@@ -210,7 +224,15 @@ namespace Cook.Controllers
                     recipe.img = fileName;  // [IMAGE]
 
                     //if image file loaded then change otherwise nothing
-                    updateSql.cmdExecute("update Recipe set img='" + recipe.img + "' where id='" + recipe.id + "'");
+                    //updateSql.cmdExecute("update Recipe set img='" + recipe.img + "' where id='" + recipe.id + "'");
+                    List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                    {
+                        new KeyValuePair<string, object>("@image", recipe.img),
+                        new KeyValuePair<string, object>("@recipe_id", recipe.id)
+                    };
+
+                    updateSql.executeStoredProcedure("UpdateImage", param);
+
                 }
             }
 
@@ -238,19 +260,45 @@ namespace Cook.Controllers
             recipe.creatorId = UserAccess.getInstance().getUser().id;   // [CREATOR ID]
 
 
-            //Write to database
-            //Write recipe to [Recipe]
-            //sql.cmdExecute("insert into Recipe values ('" + recipe.id + "','" + recipe.creatorId + "','" + recipe.name + "','" + recipe.img + "','" + recipe.description + "','" + recipe.process + "')");
-            updateSql.cmdExecute("update Recipe set name='" + recipe.name + "', description='" + recipe.description + "', process='" + recipe.process + "' where id='" + recipe.id + "'");
+            ////Write to database
+            ////Write recipe to [Recipe]
+            //updateSql.cmdExecute("update Recipe set name='" + recipe.name + "', description='" + recipe.description + "', process='" + recipe.process + "' where id='" + recipe.id + "'");
 
-            //clear ingedrients table and repopulate ingedrients table
-            updateSql.cmdExecute("delete from Ingedrients where recipe_id='" + recipe.id + "'");
+            ////clear ingedrients table and repopulate ingedrients table
+            //updateSql.cmdExecute("delete from Ingedrients where recipe_id='" + recipe.id + "'");
 
-            //Write ingedrients to [Ingedrients]
+            ////Write ingedrients to [Ingedrients]
+            //foreach (string ingedrient in ingedrientsList)
+            //{
+            //    updateSql.cmdExecute("insert into Ingedrients values('" + recipe.id + "','" + ingedrient + "')");
+            //}
+
+
+            //Update Recipe
+            List<KeyValuePair<string, object>> param1 = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("@name", recipe.name),
+                new KeyValuePair<string, object>("@description", recipe.description),
+                new KeyValuePair<string, object>("@process", recipe.process),
+                new KeyValuePair<string, object>("@recipe_id", recipe.id)
+            };
+            updateSql.executeStoredProcedure("UpdateRecipe", param1);
+
+            //Delete Ingedrients
+            param1.Clear();
+            param1.Add(new KeyValuePair<string, object>("@recipe_id", recipe.id));
+            updateSql.executeStoredProcedure("DeleteRecipeIngedrients", param1);
+
+            //Add modified Ingedrients
             foreach (string ingedrient in ingedrientsList)
             {
-                updateSql.cmdExecute("insert into Ingedrients values('" + recipe.id + "','" + ingedrient + "')");
+                param1.Clear();
+                param1.Add(new KeyValuePair<string, object>("@recipe_id", recipe.id));
+                param1.Add(new KeyValuePair<string, object>("@ingedrient", ingedrient));
+
+                updateSql.executeStoredProcedure("CreateRecipeIngedrients", param1);
             }
+
 
             return RedirectToAction("Index", "Home");
         }
@@ -277,9 +325,17 @@ namespace Cook.Controllers
         {
             SqlConnect deleteSql = new SqlConnect();
             //delete ingedrients, favourites and recipe
-            deleteSql.cmdExecute("delete from Ingedrients where recipe_id='" + recipeId + "'");
-            deleteSql.cmdExecute("delete from Favourites where recipe_id='" + recipeId + "'");
-            deleteSql.cmdExecute("delete from Recipe where id='" + recipeId + "'");
+            //deleteSql.cmdExecute("delete from Ingedrients where recipe_id='" + recipeId + "'");
+            //deleteSql.cmdExecute("delete from Favourites where recipe_id='" + recipeId + "'");
+            //deleteSql.cmdExecute("delete from Recipe where id='" + recipeId + "'");
+
+
+            List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>();
+            param.Add(new KeyValuePair<string, object>("@recipe_id", recipeId));
+
+            deleteSql.executeStoredProcedure("DeleteRecipeIngedrients", param);
+            deleteSql.executeStoredProcedure("DeleteFavouritesByRecipe", param);
+            deleteSql.executeStoredProcedure("DeleteRecipe", param);
 
             return RedirectToAction("Index", "Home");
         }
