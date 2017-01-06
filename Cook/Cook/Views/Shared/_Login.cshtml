@@ -1,7 +1,7 @@
 ﻿<ul class="nav navbar-nav navbar-right">
     @if (Request.IsAuthenticated)
     {
-        <li>@Html.ActionLink("Dashboard", "Dashboard", "Account")</li>
+        <li>@Html.ActionLink(@Request.Cookies["username"].Value + "'s Dashboard", "Dashboard", "Account")</li>
         <li>@Html.ActionLink("Create Recipe", "Create", "Recipe")</li>
         <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
     }

@@ -48,6 +48,9 @@ namespace Cook.Controllers
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 HttpContext.Response.Cookies.Add(authCookie);
 
+                HttpCookie userCookie = new HttpCookie("username", userModel.username);
+                HttpContext.Response.Cookies.Add(userCookie);
+
                 return RedirectToAction("Index", "Home");
             }
             else

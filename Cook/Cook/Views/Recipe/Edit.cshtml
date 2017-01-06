@@ -29,6 +29,17 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("Type", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.type, new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "drinks", Value="drinks"},
+                    new SelectListItem() {Text = "food", Value="food"}
+                })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.img, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="file" id="imageSelector" />
@@ -47,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ingredients, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <ul id="ingedrients-list">
+                <ul id="ingedrients-list" style="list-style-type:none">
 
                     @foreach (string ingedrient in Model.ingredients)
                     { 
