@@ -21,6 +21,7 @@ namespace Cook.Controllers
 
             recipeList = RecipeAccess.getInstance().getRecipeList(recipeLoader.sqlTable);
 
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 switch (searchString.ToLower())

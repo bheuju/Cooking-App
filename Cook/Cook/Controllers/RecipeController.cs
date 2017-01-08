@@ -16,7 +16,6 @@ namespace Cook.Controllers
         static int recipeId = 0;
 
 
-
         /************/
         /*** READ ***/
         /************/
@@ -172,7 +171,8 @@ namespace Cook.Controllers
             }
 
             //return View();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Recipe", "Recipe", new { id = recipe.id });
         }
 
 
@@ -277,9 +277,9 @@ namespace Cook.Controllers
             //Update Recipe
             List<KeyValuePair<string, object>> param1 = new List<KeyValuePair<string, object>>()
             {
-                new KeyValuePair<string, object>("@name", recipe.name),
-                new KeyValuePair<string, object>("@description", recipe.description),
-                new KeyValuePair<string, object>("@process", recipe.process),
+                new KeyValuePair<string, object>("@recipe_name", recipe.name),
+                new KeyValuePair<string, object>("@recipe_description", recipe.description),
+                new KeyValuePair<string, object>("@recipe_process", recipe.process),
                 new KeyValuePair<string, object>("@recipe_id", recipe.id)
             };
             updateSql.executeStoredProcedure("UpdateRecipe", param1);
@@ -299,8 +299,8 @@ namespace Cook.Controllers
                 updateSql.executeStoredProcedure("CreateRecipeIngedrients", param1);
             }
 
-
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Recipe", "Recipe", new { id = recipe.id });
         }
 
 

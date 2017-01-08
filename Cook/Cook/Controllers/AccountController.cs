@@ -11,7 +11,9 @@ namespace Cook.Controllers
 {
     public class AccountController : Controller
     {
-        //
+
+        static string ReturnUrl = "#";
+
         // GET: /Account/
         public ActionResult Index()
         {
@@ -21,6 +23,11 @@ namespace Cook.Controllers
         //POST: /Account/Login
         public ActionResult Login()
         {
+            //Save ReturnUrl on Clicking login page
+            ReturnUrl = Request.UrlReferrer.ToString();
+
+            //Response.Write("<br/>Hello: " + ReturnUrl);
+
             return View();
         }
 
@@ -51,7 +58,9 @@ namespace Cook.Controllers
                 HttpCookie userCookie = new HttpCookie("username", userModel.username);
                 HttpContext.Response.Cookies.Add(userCookie);
 
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                //return Redirect(Request.Referrer.ToString());
+                return Redirect(ReturnUrl);
             }
             else
             {
