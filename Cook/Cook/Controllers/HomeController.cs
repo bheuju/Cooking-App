@@ -23,7 +23,21 @@ namespace Cook.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                recipeList = recipeList.Where(s => s.name.ToLower().Contains(searchString.ToLower())).ToList<Recipe>();
+                switch (searchString.ToLower())
+                {
+                    case "all":
+                        break;
+                    case "food":
+                        recipeList = recipeList.Where(s => s.type.Equals("food")).ToList();
+                        break;
+                    case "drinks":
+                        recipeList = recipeList.Where(s => s.type.Equals("drinks")).ToList();
+                        break;
+                    default:
+                        recipeList = recipeList.Where(s => s.name.ToLower().Contains(searchString.ToLower())).ToList<Recipe>();
+                        break;
+                }
+
             }
 
             return View(recipeList);

@@ -9,7 +9,7 @@ namespace Cook.Models
     {
         public Drinks()
         {
-            type = "Drinks";
+            type = "drinks";
         }
     }
 }

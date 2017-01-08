@@ -23,17 +23,19 @@
                     {
                         <button class="btn btn-info pull-right">Favourite  <span class="glyphicon glyphicon-star"></span></button>
                     }
+
                 </div>
             </div>
             }
 
             if (Model.isEditable)
             {    
-            @Html.ActionLink("Edit", "Edit", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-default btn-primary pull-right" })
-            @Html.ActionLink("Delete", "Delete", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-danger pull-right" })
+            <p>@Html.ActionLink("Edit", "Edit", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-default btn-primary pull-right" })</p>
+            <p>@Html.ActionLink("Delete", "Delete", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-danger pull-right" })</p>
             }
 
         }
+
 
         <img src="/Content/Images/@Model.img" class="img-responsive center-block img-rounded"/>
 
@@ -64,5 +66,8 @@
 
 
 <script>
-    
+    function toggleFavourite() {
+
+    }
+
 </script>

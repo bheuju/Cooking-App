@@ -349,5 +349,11 @@ namespace Cook.Controllers
             return HomeController.recipeList[id - 1];
         }
 
+        public void Favourite()
+        {
+
+
+        }
+
     }
 }

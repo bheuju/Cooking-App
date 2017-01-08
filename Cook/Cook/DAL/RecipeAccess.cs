@@ -94,9 +94,7 @@ namespace Cook.DAL
 
                     //Get Recipe object from RecipeFactory
                     RecipeFactory factory = new RecipeFactory();
-                    Recipe recipe = new Recipe();
-
-                    recipe = factory.Get(type.ToLower());
+                    Recipe recipe = factory.Get(type.ToLower());
 
                     recipe.id = id;
                     recipe.creatorId = creatorId;

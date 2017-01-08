@@ -1,7 +1,7 @@
-﻿@foreach (var recipe in Model)
+﻿@*@foreach (var recipe in Model)
 {
     <p>@Html.ActionLink((string)recipe.name, "Recipe", "Recipe", new { id = recipe.id }, null)</p>
-}
+}*@
 
 
 <div class="row">
@@ -10,7 +10,7 @@
         {
             Cook.Models.Recipe recipe = Model[i];
             //<a href="recipe/recipe/@recipe.id" class="thumbnail">
-            <a href=@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null) class="thumbnail">
+            <a href="@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null)" class="thumbnail">
                 <div class="center-block">
                     <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
                     <h4 class="text-center">@recipe.name</h4>
@@ -23,7 +23,7 @@
         @for (int i = 1; i < Model.Count; i = i + 4)
         {
             Cook.Models.Recipe recipe = Model[i];
-            <a href=@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null) class="thumbnail">
+            <a href="@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null)" class="thumbnail">
                 <div class="center-block">
                     <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
                     <h4 class="text-center">@recipe.name</h4>
@@ -36,7 +36,7 @@
         @for (int i = 2; i < Model.Count; i = i + 4)
         {
             Cook.Models.Recipe recipe = Model[i];
-            <a href=@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null) class="thumbnail">
+            <a href="@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null)" class="thumbnail">
                 <div class="center-block">
                     <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
                     <h4 class="text-center">@recipe.name</h4>
@@ -49,7 +49,7 @@
         @for (int i = 3; i < Model.Count; i = i + 4)
         {
             Cook.Models.Recipe recipe = Model[i];
-            <a href=@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null) class="thumbnail">
+            <a href="@Url.Action("Recipe", "Recipe", new { id = recipe.id }, null)" class="thumbnail">
                 <div class="center-block">
                     <img src="/content/images/@recipe.img" class="img img-responsive center-block" />
                     <h4 class="text-center">@recipe.name</h4>

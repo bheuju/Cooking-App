@@ -5,37 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Cooking App</h2>
+<div class="search-container container-fluid img">
+    <div class="text-center">
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
-{   
-    <div class="form-group">
+        <h2 class="search-title">Love to Cook</h2>
 
-        @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search" })
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
+        {   
+            <div class="form-group">
+                @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search Recipe", id = "search-input" })
+                <button class="btn btn-default" id="search-button"><span class="glyphicon glyphicon-search"></span></button>
+            </div>   
+        }
 
     </div>
-    <button class="btn btn-default">Search</button>
-}
+</div>
 
+@*<p>This is a paragraph. I like it! (^_^) </p>*@
+@*<hr />*@
 
-<p>This is a paragraph. I like you! (^_^) </p>
-<hr />
+<div style="margin-bottom: 20px;">
+    <ul class="breadcrumb" id="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">All</li>
+    </ul>
+    <ul class="nav nav-pills">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Browse<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="?searchString=All">All</a></li>
+                <li><a href="?searchString=Food">Food</a></li>
+                <li><a href="?searchString=Drinks">Drinks</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
 
 @Html.Partial("_ListRecipes", Model)
 
-@*<div class="row">
-    @foreach (Cook.Models.Recipe recipe in Model)
-    {
-        <div class="col-md-3">
-            <a href="#" class="thumbnail">
-                <div class="center-block">
-                    <img src="/content/images/@recipe.img" class="img img-responsive" />
-                    <h4 class="text-center">@recipe.name</h4>
-                </div>
-            </a>
-        </div>
-    }
-</div>*@
 
-@*<hr />*@
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script>
+    
+</script>

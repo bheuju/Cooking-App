@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ingredients, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <ul id="ingedrients-list" style="list-style-type:none">
+                <ul id="ingedrients-list" style="list-style-type: none">
 
                     @foreach (string ingedrient in Model.ingredients)
                     { 
@@ -93,7 +93,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Cancel", "Index", "Home")
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
