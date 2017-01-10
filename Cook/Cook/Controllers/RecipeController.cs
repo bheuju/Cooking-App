@@ -31,54 +31,6 @@ namespace Cook.Controllers
             return View(recipe);
         }
 
-        //POST: /Recipe/recipe/{id}
-        [HttpPost]
-        public ActionResult Recipe()
-        {
-            //Loads recipe from home recipeList
-            //Recipe recipe = getRecipeFromHome(recipeId);
-
-            //loads recipe from database
-            Recipe recipe = RecipeAccess.getInstance().getRecipe(recipeId);
-
-            //Response.Write("Favourited");
-
-            //Favourited recipe by the user
-            //Assign in favourite list
-            int user_id = UserAccess.getInstance().getUser().id;
-
-            //Toggle Favourites from database
-            if (recipe.isFavourited)
-            {
-                //do unfavourite (remove)
-                SqlConnect unfavouriteSQL = new SqlConnect();
-                //unfavouriteSQL.cmdExecute("delete from favourites where user_id='" + user_id + "'and recipe_id='" + recipeId + "'", "Error removing from favourites");
-                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
-                {
-                    new KeyValuePair<string, object>("@user_id", user_id),
-                    new KeyValuePair<string, object>("@recipe_id", recipeId)
-                };
-
-                unfavouriteSQL.executeStoredProcedure("DeleteFavourites", param);
-            }
-            else
-            {
-                //do favourite (add)
-                SqlConnect favouriteSQL = new SqlConnect();
-                //favouriteSQL.cmdExecute("insert into favourites values('" + user_id + "','" + recipeId + "')", "Error saving to favourites");
-                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
-                {
-                    new KeyValuePair<string, object>("@user_id", user_id),
-                    new KeyValuePair<string, object>("@recipe_id", recipeId)
-                };
-
-                favouriteSQL.executeStoredProcedure("SetFavourites", param);
-            }
-
-            return View(recipe);
-        }
-
-
 
         /**************/
         /*** CREATE ***/
@@ -129,7 +81,8 @@ namespace Cook.Controllers
 
             Response.Write("Valid Ingedrients count: " + ingedrientsList.Count);
 
-            recipe.id = HomeController.recipeList.Count + 1;    // [ID]
+            //recipe.id = HomeController.recipeList.Count + 1;    // [ID]
+            recipe.id = RecipeAccess.getInstance().getNewRecipeId();
             recipe.creatorId = UserAccess.getInstance().getUser().id;   // [CREATOR ID]
 
             /*************************************/
@@ -148,6 +101,8 @@ namespace Cook.Controllers
             /*************************************/
 
             SqlConnect createSql = new SqlConnect();
+
+            System.Diagnostics.Debug.Print("Type: " + recipe.type);
 
             List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
             {
@@ -315,7 +270,7 @@ namespace Cook.Controllers
         public ActionResult Delete()
         {
             //Are you sure?
-            return View();
+            return View(RecipeAccess.getInstance().getRecipe(recipeId));
         }
 
         [Authorize(Roles = "user,admin")]
@@ -353,6 +308,44 @@ namespace Cook.Controllers
         {
 
 
+        }
+
+
+        [HttpPost]
+        public void AlterFav(string id)
+        {
+            int recipe_id = Convert.ToInt32(id);
+            Recipe recipe = RecipeAccess.getInstance().getRecipe(recipe_id);
+
+            int user_id = UserAccess.getInstance().getUser().id;
+
+            //Toggle Favourites from database
+            if (recipe.isFavourited)
+            {
+                //do unfavourite (remove)
+                SqlConnect unfavouriteSQL = new SqlConnect();
+                //unfavouriteSQL.cmdExecute("delete from favourites where user_id='" + user_id + "'and recipe_id='" + recipeId + "'", "Error removing from favourites");
+                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                {
+                    new KeyValuePair<string, object>("@user_id", user_id),
+                    new KeyValuePair<string, object>("@recipe_id", recipeId)
+                };
+
+                unfavouriteSQL.executeStoredProcedure("DeleteFavourites", param);
+            }
+            else
+            {
+                //do favourite (add)
+                SqlConnect favouriteSQL = new SqlConnect();
+                //favouriteSQL.cmdExecute("insert into favourites values('" + user_id + "','" + recipeId + "')", "Error saving to favourites");
+                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                {
+                    new KeyValuePair<string, object>("@user_id", user_id),
+                    new KeyValuePair<string, object>("@recipe_id", recipeId)
+                };
+
+                favouriteSQL.executeStoredProcedure("SetFavourites", param);
+            }
         }
 
     }

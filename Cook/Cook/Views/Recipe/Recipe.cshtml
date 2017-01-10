@@ -2,39 +2,43 @@
 
 @{
     ViewBag.Title = "Recipe";
-    
+
 }
 
 <div class="row">
     <div class="col-md-12">
         <h2>@Model.id @Model.name</h2>
 
-        @if (Request.IsAuthenticated)
-        {
-            using (Html.BeginForm())
+        <div class="pull-right center-block">
+            @if (Request.IsAuthenticated)
             {
-            <div class="form-horizontal">
-                <div class="form-group">
-                    @if (Model.isFavourited)
-                    {
-                        <button class="btn btn-danger pull-right">Unfavourite  <span class="glyphicon glyphicon-star"></span></button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-info pull-right">Favourite  <span class="glyphicon glyphicon-star"></span></button>
-                    }
-
+                <div class="form-horizontal">
+                    <div class="div-fav-button" id="@Model.id" style="margin-bottom:12px">
+                        @if (Model.isFavourited)
+                        {
+                            <button class="btn btn-primary btn-unfav btn-general">Unfavourite  <span class="glyphicon glyphicon-heart" style="color: red"></span></button>
+                            <button class="btn btn-info btn-fav btn-general" style="display: none">Favourite  <span class="glyphicon glyphicon-heart-empty" style="color: #00ffff"></span></button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-unfav btn-general" style="display: none">Unfavourite  <span class="glyphicon glyphicon-heart" style="color: red"></span></button>
+                            <button class="btn btn-info btn-fav btn-general">Favourite  <span class="glyphicon glyphicon-heart-empty" style="color: #00ffff"></span></button>
+                        }
+                    </div>
                 </div>
-            </div>
-            }
+                
 
-            if (Model.isEditable)
-            {    
-            <p>@Html.ActionLink("Edit", "Edit", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-default btn-primary pull-right" })</p>
-            <p>@Html.ActionLink("Delete", "Delete", "Recipe", new { recipeId = @Model.id }, new { @class = "btn btn-danger pull-right" })</p>
-            }
+                        if (Model.isEditable)
+                        {    
+                <div>
+                    <a href="@Url.Action("Edit", "Recipe", new { recipeId = @Model.id })" class="btn btn-info btn-general" style="margin-bottom:12px">Edit  <span class="glyphicon glyphicon-pencil"></span></a>
+                    <br />
+                    <a href="@Url.Action("Delete", "Recipe", new { recipeId = @Model.id })" class="btn btn-default btn-general">Delete  <span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+                        }
 
-        }
+            }
+        </div>
 
 
         <img src="/Content/Images/@Model.img" class="img-responsive center-block img-rounded"/>
@@ -66,8 +70,26 @@
 
 
 <script>
-    function toggleFavourite() {
+    $(document).ready(function () {
 
-    }
+        $(".btn-unfav").on("click", function () {
+            $(this).hide();
+            $(this).siblings(".btn-fav").show();
+            alterfav(parseInt($(this).parents(".div-fav-button").attr("id")));
+        });
 
+        $(".btn-fav").on("click", function () {
+            $(this).hide();
+            $(this).siblings(".btn-unfav").show();
+            alterfav(($(this).parents(".div-fav-button").attr("id")));
+        });
+
+        function alterfav(id) {
+            $.ajax({
+                method: "POST",
+                url: "/Recipe/AlterFav",
+                data: { "id": id }
+            });
+        }
+    });
 </script>

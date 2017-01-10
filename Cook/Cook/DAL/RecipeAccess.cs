@@ -30,14 +30,21 @@ namespace Cook.DAL
          * 
          **/
 
-        //public Recipe getRecipe(int recipeId)
-        //{
-        //    SqlConnect sql = new SqlConnect();
-        //    sql.executeStoredPrcedure("GetRecipe");
-        //    //System.Diagnostics.Debug.Print("Stored procedure get recipe count: " + sql.sqlTable.Rows.Count);
+        public int getNewRecipeId()
+        {
+            int id;
 
-        //    return new Recipe();
-        //}
+            SqlConnect sql = new SqlConnect();
+            //sql.executeStoredPrcedure("GetRecipe");
+
+            sql.retriveData("select top 1 id from Recipe order by id desc");
+            id = Convert.ToInt32(sql.sqlTable.Rows[0]["id"]);
+
+
+            System.Diagnostics.Debug.Print("Next ID: " + (id + 1));
+
+            return (id + 1);
+        }
 
         public Recipe getRecipe(int recipeId)
         {

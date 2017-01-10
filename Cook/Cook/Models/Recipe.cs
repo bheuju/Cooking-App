@@ -8,6 +8,13 @@ namespace Cook.Models
 {
     public class Recipe
     {
+
+        public Recipe()
+        {
+            setType();
+        }
+
+
         [Display(Name = "ID")]
         public int id { get; set; }
 
@@ -37,7 +44,15 @@ namespace Cook.Models
         public bool isFavourited = false;
         public bool isEditable = false;
 
+
+
+
         public string type { get; set; }
+
+
+
+        /*Methods*/
+        public virtual void setType() { }
 
     }
 }

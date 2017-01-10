@@ -7,7 +7,7 @@ namespace Cook.Models
 {
     public class Drinks : Recipe
     {
-        public Drinks()
+        public override void setType()
         {
             type = "drinks";
         }
