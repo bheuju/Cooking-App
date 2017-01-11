@@ -53,6 +53,17 @@ namespace Cook.Controllers
             {
                 var file = Request.Files[0];
 
+                if (file.ContentType.ToLower() != "image/jpg" &&
+                       file.ContentType.ToLower() != "image/jpeg" &&
+                       file.ContentType.ToLower() != "image/pjpeg" &&
+                       file.ContentType.ToLower() != "image/gif" &&
+                       file.ContentType.ToLower() != "image/x-png" &&
+                       file.ContentType.ToLower() != "image/png")
+                {
+                    ModelState.AddModelError("", "Not a valid image file");
+                    return View();
+                }
+
                 if (file != null && file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
@@ -61,6 +72,7 @@ namespace Cook.Controllers
 
                     recipe.img = fileName;  // [IMAGE]
                 }
+
             }
 
             List<string> ingedrientsList = new List<string>();
@@ -164,9 +176,14 @@ namespace Cook.Controllers
             {
                 var file = Request.Files[0];
 
-                //if (file.ContentType != "image/jpeg")
+                //if (file.ContentType.ToLower() != "image/jpg" &&
+                //       file.ContentType.ToLower() != "image/jpeg" &&
+                //       file.ContentType.ToLower() != "image/pjpeg" &&
+                //       file.ContentType.ToLower() != "image/gif" &&
+                //       file.ContentType.ToLower() != "image/x-png" &&
+                //       file.ContentType.ToLower() != "image/png")
                 //{
-                //    ModelState.AddModelError("", "Not an image file");
+                //    ModelState.AddModelError("", "Not a valid image file");
                 //    return View();
                 //}
 

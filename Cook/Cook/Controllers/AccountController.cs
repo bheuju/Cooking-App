@@ -76,31 +76,38 @@ namespace Cook.Controllers
         }
 
         [HttpPost]
-        public ActionResult Signup(User user)
+        public ActionResult Signup(User user, string repassword)
         {
-            SqlConnect saveSql = new SqlConnect();
 
-            //Check user already exists
-            if (!UserAccess.getInstance().checkUserExists(user))
+            if (user.password == repassword)
             {
-                //saveSql.cmdExecute("insert into users values ('" + user.username + "','" + user.password + "','" + "user" + "')");
+                SqlConnect saveSql = new SqlConnect();
 
-                List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
+                //Check user already exists
+                if (!UserAccess.getInstance().checkUserExists(user))
+                {
+                    //saveSql.cmdExecute("insert into users values ('" + user.username + "','" + user.password + "','" + "user" + "')");
+
+                    List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
                 {
                     new KeyValuePair<string, object>("@username", user.username),
                     new KeyValuePair<string, object>("@password", user.password),
                     new KeyValuePair<string, object>("@roles", "user")
                 };
-                saveSql.executeStoredProcedure("SignUpUser", param);
+                    saveSql.executeStoredProcedure("SignUpUser", param);
 
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username already exists");
+                }
             }
             else
             {
-                ModelState.AddModelError("", "Username already exists");
+                ModelState.AddModelError("", "Passwords do not match");
             }
-
             //return RedirectToAction("Index", "Home");
             return View();
         }

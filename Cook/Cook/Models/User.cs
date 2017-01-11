@@ -10,11 +10,15 @@ namespace Cook.Models
     {
         public int id { get; set; }
 
+        [Required]
+        [Display(Name = "Username")]
         public string username { get; set; }
 
+        [Required]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string password { get; set; }
-
+        
         public string roles { get; set; }
     }
 }
