@@ -17,7 +17,8 @@ namespace Cook.Controllers
         // GET: /Account/
         public ActionResult Index()
         {
-            return View();
+            //return View();
+            return RedirectToAction("Index", "Home");
         }
 
         //POST: /Account/Login
@@ -25,6 +26,11 @@ namespace Cook.Controllers
         {
             //Save ReturnUrl on Clicking login page
             ReturnUrl = Request.UrlReferrer.ToString();
+
+            if (ReturnUrl.ToLower().Contains("signup"))
+            {
+                ReturnUrl = "#";
+            }
 
             //Response.Write("<br/>Hello: " + ReturnUrl);
 
