@@ -45,11 +45,10 @@ namespace Cook.Controllers
                 return View(userModel);
             }
 
-            User user = new User() { username = userModel.username, password = userModel.password };
-
             //get user details
             //check user credentials
-            user = UserAccess.getInstance().getUserDetails(user);
+            //user = UserAccess.getInstance().getUserDetails(user);
+            User user = UserAccess.getInstance().getUser(userModel.username, userModel.password);
 
             if (user != null)
             {
@@ -90,19 +89,17 @@ namespace Cook.Controllers
                 SqlConnect saveSql = new SqlConnect();
 
                 //Check user already exists
-                if (!UserAccess.getInstance().checkUserExists(user))
+                if (!UserAccess.getInstance().getUser(user.username))
                 {
                     //saveSql.cmdExecute("insert into users values ('" + user.username + "','" + user.password + "','" + "user" + "')");
 
                     List<KeyValuePair<string, object>> param = new List<KeyValuePair<string, object>>()
-                {
-                    new KeyValuePair<string, object>("@username", user.username),
-                    new KeyValuePair<string, object>("@password", user.password),
-                    new KeyValuePair<string, object>("@roles", "user")
-                };
+                    {
+                        new KeyValuePair<string, object>("@username", user.username),
+                        new KeyValuePair<string, object>("@password", user.password),
+                        new KeyValuePair<string, object>("@roles", "user")
+                    };
                     saveSql.executeStoredProcedure("SignUpUser", param);
-
-
                     return RedirectToAction("Index", "Home");
                 }
                 else

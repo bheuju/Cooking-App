@@ -45,10 +45,7 @@ namespace Cook.Models
         public bool isEditable = false;
 
 
-
-
         public string type { get; set; }
-
 
 
         /*Methods*/

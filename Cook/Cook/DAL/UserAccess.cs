@@ -21,15 +21,6 @@ namespace Cook.DAL
         static UserAccess pInstance = null;
         UserAccess() { }
 
-        public User getUser()
-        {
-            if (pUser == null)
-            {
-                return guestUser;
-            }
-            return pUser;
-        }
-
         public static UserAccess getInstance()
         {
             if (pInstance == null)
@@ -39,42 +30,59 @@ namespace Cook.DAL
             return pInstance;
         }
 
-        public User getUserDetails(User user)
+
+        public User getUser()
+        {
+            if (pUser == null)
+            {
+                return guestUser;
+            }
+            return pUser;
+        }
+
+
+        public bool getUser(string username)
         {
             SqlConnect sql = new SqlConnect();
 
-            sql.retriveData("select * from Users where username='" + user.username + "' and password='" + user.password + "'");
+            sql.retriveData("select * from Users where username='" + username + "'");
             int count = sql.sqlTable.Rows.Count;
 
             if (count > 0)
             {
                 //user exists
-                pUser = new User()
+                return true;
+            }
+            return false;
+        }
+
+
+        public User getUser(string username, string password)
+        {
+            User user = null;
+
+            SqlConnect sql = new SqlConnect();
+
+            sql.retriveData("select * from Users where username='" + username + "' and password='" + password + "'");
+            int count = sql.sqlTable.Rows.Count;
+
+            if (count > 0)
+            {
+                //user exists
+                user = new User()
                 {
                     id = Convert.ToInt32(sql.sqlTable.Rows[0]["id"]),
                     username = sql.sqlTable.Rows[0]["username"].ToString(),
                     password = sql.sqlTable.Rows[0]["password"].ToString(),
                     roles = sql.sqlTable.Rows[0]["roles"].ToString()
                 };
-                return pUser;
+
+                pUser = user;
+
+                return user;
             }
 
-            //user not found ... return null
-            return null;
-        }
-
-        public bool checkUserExists(User user)
-        {
-            SqlConnect sql = new SqlConnect();
-
-            sql.retriveData("select * from Users where username='" + user.username + "'");
-
-            if (sql.sqlTable.Rows.Count > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return user;
         }
     }
 }

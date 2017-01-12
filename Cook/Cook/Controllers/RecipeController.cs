@@ -321,13 +321,6 @@ namespace Cook.Controllers
             return HomeController.recipeList[id - 1];
         }
 
-        public void Favourite()
-        {
-
-
-        }
-
-
         [HttpPost]
         public void AlterFav(string id)
         {
