@@ -64,9 +64,12 @@ namespace Cook.Controllers
                     return View();
                 }
 
+                //string dd = DateTime.Now();
+
                 if (file != null && file.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
+                    var imgName = Path.GetFileName(file.FileName);
+                    var fileName = generateUniqueID() + imgName;
                     var path = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
                     file.SaveAs(path);
 
@@ -91,7 +94,7 @@ namespace Cook.Controllers
                 }
             }
 
-            Response.Write("Valid Ingedrients count: " + ingedrientsList.Count);
+            //Response.Write("Valid Ingedrients count: " + ingedrientsList.Count);
 
             //recipe.id = HomeController.recipeList.Count + 1;    // [ID]
             recipe.id = RecipeAccess.getInstance().getNewRecipeId();
@@ -189,7 +192,8 @@ namespace Cook.Controllers
 
                 if (file != null && file.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
+                    var imgName = Path.GetFileName(file.FileName);
+                    var fileName = generateUniqueID() + imgName;
                     var path = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
                     file.SaveAs(path);
 
@@ -314,12 +318,6 @@ namespace Cook.Controllers
 
 
 
-        /** EXTRA **/
-
-        public Recipe getRecipeFromHome(int id)
-        {
-            return HomeController.recipeList[id - 1];
-        }
 
         [HttpPost]
         public void AlterFav(string id)
@@ -356,6 +354,19 @@ namespace Cook.Controllers
 
                 favouriteSQL.executeStoredProcedure("SetFavourites", param);
             }
+        }
+
+        /** EXTRA **/
+
+        public Recipe getRecipeFromHome(int id)
+        {
+            return HomeController.recipeList[id - 1];
+        }
+
+
+        public string generateUniqueID()
+        {
+            return Guid.NewGuid().ToString("N");
         }
 
     }
